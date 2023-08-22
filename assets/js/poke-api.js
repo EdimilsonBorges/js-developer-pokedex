@@ -25,6 +25,8 @@ pokeApi.getPokemonDetail = (pokemon) => {
 
 pokeApi.getPokemons = (offset = 0, limit = 5) => {
     const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
+    const loading = document.getElementById("loading");
+    const pagination = document.getElementById("pagination");
 
     return fetch(url)
         .then((response) => response.json())
@@ -32,4 +34,8 @@ pokeApi.getPokemons = (offset = 0, limit = 5) => {
         .then((pokemons) => pokemons.map(pokeApi.getPokemonDetail))
         .then((detailRequests) => Promise.all(detailRequests))
         .then((pokemonsDetails) => pokemonsDetails)
+        .finally(()=>{
+            loading.classList.remove("visible");
+            pagination.classList.add("visible");
+        })
 }

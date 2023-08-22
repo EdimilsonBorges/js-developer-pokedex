@@ -23,18 +23,27 @@
 </head>
 
 <body>
-    <section class="content">
+    <section class="content contentVisible" id="content">
         <h1>Pokedex</h1>
 
         <ol id="pokemonList" class="pokemons">
             <!-- ..... Pokemons here ..... -->
         </ol>
 
-        <div class="pagination">
+        <div class="loading visible" id="loading">
+            <div class="custom-loader">
+
+            </div>
+        </div>
+        <div class="pagination" id="pagination">
             <button id="loadMoreButton" type="button">
                 Load More
             </button>
         </div>
+    </section>
+
+    <section class="content" id="contentDetails">
+
     </section>
 
     <!-- Nosso JS -->
