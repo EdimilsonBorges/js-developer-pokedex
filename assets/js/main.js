@@ -1,3 +1,5 @@
+import { Details } from "./details.js";
+
 const pokemonList = document.getElementById('pokemonList')
 const loadMoreButton = document.getElementById('loadMoreButton')
 const pagination = document.getElementById("pagination");
@@ -5,6 +7,7 @@ const pagination = document.getElementById("pagination");
 const maxRecords = 151
 const limit = 10
 let offset = 0;
+const details = new Details();
 
 function convertPokemonToLi(pokemon) {
     return `
@@ -28,37 +31,8 @@ function loadPokemonItens(offset, limit) {
     pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
         const newHtml = pokemons.map(convertPokemonToLi).join('')
         pokemonList.innerHTML += newHtml
-        getDetails();
+        details.getDetails();
     })
-}
-
-function getDetails() {
-    const content = document.getElementById("content")
-    const contentDetails = document.getElementById("contentDetails")
-    const pokemon = [...document.getElementsByClassName("pokemon")]
-    pokemon.forEach((iten) => {
-        iten.addEventListener("click", () => {
-            const idPokemon = iten.children[0].innerHTML.replace("#", "")
-            const namePokemon = iten.children[1]
-            const colorPokemon = iten.classList[1]
-            const imagePokemon = iten.children[2].children[1]
-            const url = `https://pokeapi.co/api/v2/move/${idPokemon}`
-            content.classList.remove("contentVisible")
-            contentDetails.classList.add("contentVisible");
-            contentDetails.innerHTML = `<h1>Detalhes</h1><div class="details ${colorPokemon}"></div>`
-
-            fetch(url)
-                .then(res => res.json())
-                .then((result) => {
-                    const details = document.querySelector(".details");
-                    details.addEventListener("click", () => {
-                        content.classList.add("contentVisible")
-                        contentDetails.classList.remove("contentVisible");
-                    });
-                })
-
-        })
-    });
 }
 
 loadPokemonItens(offset, limit)
